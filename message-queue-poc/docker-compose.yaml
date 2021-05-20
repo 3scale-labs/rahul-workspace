@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+    proxy:
+      build:
+        context: ./envoy
+        dockerfile: Dockerfile
+      ports:
+        - "9095:9095"
+      networks:
+        - envoymesh
+    
+    backend_service:
+      image: hashicorp/http-echo
+      command:
+        - '-text= "Welcome to backend"'
+      networks:
+        - envoymesh
+      ports:
+        - "1800:5678"
+
+networks:
+    envoymesh: {}
