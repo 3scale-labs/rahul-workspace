@@ -7,7 +7,7 @@ use proxy_wasm::{
 
 // These values preferably be configured through envoy.yaml but there is no need for root context so having them here is efficient.
 const QUEUE_NAME: &str = "message_queue"; 
-const VM_ID: &str = "my_vm_id";
+const VM_ID: &str = "my_vm_id"; // This should be same as mentioned in the config for singleton service
 
 #[no_mangle]
 pub fn _start() {
