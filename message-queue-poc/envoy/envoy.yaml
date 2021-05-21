@@ -1,4 +1,19 @@
 bootstrap_extensions:
+- name: envoy.bootstrap.wasm
+  typed_config:
+    '@type': type.googleapis.com/envoy.extensions.wasm.v3.WasmService
+    singleton: true
+    config:
+      name: "singleton_service"
+      root_id: "singleton_service"
+      vm_config:
+        runtime: "envoy.wasm.runtime.v8"
+        vm_id: "my_vm_id"
+        code:
+          local:
+            filename: "/usr/local/bin/queue_poc_singleton.wasm"
+        configuration: {}
+        allow_precompiled: true
 static_resources:
   listeners:
   - address:
