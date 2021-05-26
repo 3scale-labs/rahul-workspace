@@ -1,3 +1,4 @@
 *.wasm
 message-queue-poc/cache-filter/target/*
 message-queue-poc/singleton-service/target/*
+folder-structure/target/*
