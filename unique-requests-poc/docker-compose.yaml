@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  proxy_1:
+    build:
+      context: ./envoy
+      dockerfile: Dockerfile
+    depends_on:
+      - backend_service
+    networks:
+      - envoymesh
+    ports:
+      - "9095:9095"
+      - "9000:9000"
+  
+  proxy_2:
+    build:
+      context: ./envoy
+      dockerfile: Dockerfile
+    depends_on:
+      - backend_service
+    networks:
+      - envoymesh
+    ports:
+      - "9096:9095"
+      - "9001:9000"
+
+  backend_service:
+    build:
+      context: ./backend-service
+      dockerfile: Dockerfile
+    networks:
+      - envoymesh
+
+  management-service:
+    build:
+      context: ./management-service
+      dockerfile: Dockerfile
+    networks:
+      - envoymesh
+    ports: 
+      - "9098:8000"
+
+networks:
+  envoymesh: {}

@@ -47,6 +47,13 @@ static_resources:
                 config:
                   name: "cache_filter"
                   root_id: "cache_root"
+                  configuration: 
+                    "@type": type.googleapis.com/google.protobuf.StringValue
+                    value: |
+                      {
+                        "threescale_auth_timeout": "5000",
+                        "failure_mode_deny": "true"
+                      }
                   vm_config:
                     runtime: "envoy.wasm.runtime.v8"
                     code:
@@ -69,6 +76,27 @@ static_resources:
               socket_address:
                 address: backend_service
                 port_value: 5678
+  - name: outbound|443||su1.3scale.net
+    connect_timeout: 2.0s
+    type: LOGICAL_DNS
+    dns_refresh_rate: 60s
+    lb_policy: round_robin
+    upstream_connection_options:
+      tcp_keepalive: {}
+    load_assignment:
+      cluster_name: outbound|443||su1.3scale.net
+      endpoints:
+      - lb_endpoints:
+          - endpoint:
+              address:
+                socket_address:
+                  address: su1.3scale.net
+                  port_value: 443
+    transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
+          sni: su1.3scale.net
 admin:
   access_log_path: /dev/null
   address:

@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - backend_service
+      - management_service
+    networks:
+      - envoymesh
+    ports:
+      - "9095:9095"
+      - "9000:9000"
+
+  backend_service:
+    image: solsson/http-echo
+    container_name: backend_service
+    networks:
+      - envoymesh
+    environment:
+      - PORT=8000
+    
+  management_service:
+    build:
+      context: ./management-service
+      dockerfile: Dockerfile
+    container_name: management_service
+    networks:
+      - envoymesh
+    ports:
+      - "3001:3001"
+
+networks:
+    envoymesh:
+        name: envoymesh

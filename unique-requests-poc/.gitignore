@@ -1,0 +1,2 @@
+envoy/*.wasm
+filter/target/*

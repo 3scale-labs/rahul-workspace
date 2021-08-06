@@ -4,6 +4,10 @@ services:
       build:
         context: ./envoy
         dockerfile: Dockerfile
+      expose:
+        - "443"
+        - "8080"
+        - "80"
       ports:
         - "9095:9095"
       networks:
